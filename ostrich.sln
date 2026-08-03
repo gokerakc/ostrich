@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{53229BC7-A779-485B-9C13-17DA7AF73335}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2B05D55B-9E29-493A-A118-4099A0F0ABE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ostrich.Core", "src\Ostrich.Core\Ostrich.Core.csproj", "{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ostrich.Worker", "src\Ostrich.Worker\Ostrich.Worker.csproj", "{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ostrich.Api", "src\Ostrich.Api\Ostrich.Api.csproj", "{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mocker", "mocker", "{2D0CD0FE-2A07-424A-86BA-96BCA60AA051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ostrich.Mocker", "mocker\Ostrich.Mocker\Ostrich.Mocker.csproj", "{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE} = {53229BC7-A779-485B-9C13-17DA7AF73335}
+		{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB} = {53229BC7-A779-485B-9C13-17DA7AF73335}
+		{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5} = {53229BC7-A779-485B-9C13-17DA7AF73335}
+		{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93} = {2D0CD0FE-2A07-424A-86BA-96BCA60AA051}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF2C0FA-F0E0-44CA-934B-D3CD85DF0BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A6055A-56AB-4E6C-A6A0-A1E1176A8BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D0CBCC4-3A45-489E-82EA-C3410F13B3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BFF8E6B-B58E-49FC-B62E-A7D8F49DDA93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
