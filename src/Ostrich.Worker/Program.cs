@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Ostrich.Core.Data;
+using Ostrich.Application.Services;
 using Ostrich.Core.Services;
+using Ostrich.Infrastructure.Data;
+using Ostrich.Infrastructure.Services;
 using Ostrich.Worker;
 using StackExchange.Redis;
 
@@ -19,6 +21,7 @@ builder.Services.AddDbContextFactory<AppDbContext>(options =>
 
 builder.Services.AddSingleton<IPaymentRepository, PaymentRepository>();
 builder.Services.AddSingleton<IStreamConsumer, RedisStreamConsumer>();
+builder.Services.AddSingleton<IPaymentService, PaymentService>();
 builder.Services.AddHostedService<PaymentProcessor>();
 
 var host = builder.Build();

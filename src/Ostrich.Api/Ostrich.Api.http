@@ -1,11 +1,12 @@
-@Ostrich.Api_HostAddress = http://localhost:5098
-
-GET {{Ostrich.Api_HostAddress}}/payments?page=1&pageSize=5
+GET http://localhost:5098/payments?page=1&pageSize=5
 Accept: application/json
 
 ###
 
-GET {{Ostrich.Api_HostAddress}}/payments/00000000-0000-0000-0000-000000000000
+GET http://localhost:5098/payments/45c0f550-c659-4958-9340-bbe2798b7bec
 Accept: application/json
 
 ###
+
+POST http://localhost:5098/payments/45c0f550-c659-4958-9340-bbe2798b7bec/refund
+Accept: application/json

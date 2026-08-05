@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Ostrich.Core\Ostrich.Core.csproj"/>
+        <ProjectReference Include="..\Ostrich.Application\Ostrich.Application.csproj"/>
+        <ProjectReference Include="..\Ostrich.Infrastructure\Ostrich.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

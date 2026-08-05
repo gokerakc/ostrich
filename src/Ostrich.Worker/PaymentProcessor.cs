@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Ostrich.Application.Services;
 using Ostrich.Core.Services;
 using StackExchange.Redis;
 
@@ -8,17 +9,17 @@ namespace Ostrich.Worker;
 public class PaymentProcessor : BackgroundService
 {
     private readonly IStreamConsumer _streamConsumer;
-    private readonly IPaymentRepository _paymentRepository;
+    private readonly IPaymentService _paymentService;
     private readonly ILogger<PaymentProcessor> _logger;
     private readonly string _consumerName;
 
     public PaymentProcessor(
         IStreamConsumer streamConsumer,
-        IPaymentRepository paymentRepository,
+        IPaymentService paymentService,
         ILogger<PaymentProcessor> logger)
     {
         _streamConsumer = streamConsumer;
-        _paymentRepository = paymentRepository;
+        _paymentService = paymentService;
         _logger = logger;
         _consumerName = $"worker-{Guid.NewGuid():N}";
     }
@@ -59,10 +60,7 @@ public class PaymentProcessor : BackgroundService
             "Processing payment {Id} | {Amount} {Currency} | {Merchant}",
             payment.Id, payment.Amount, payment.Currency, payment.Merchant);
 
-        payment.Status = "Processed";
-        payment.ProcessedAt = DateTime.UtcNow;
-
-        await _paymentRepository.SaveAsync(payment, ct);
+        await _paymentService.ProcessPaymentAsync(payment, ct);
         await _streamConsumer.AcknowledgeAsync(message.EntryId);
 
         _logger.LogInformation("Payment {Id} processed and stored", payment.Id);

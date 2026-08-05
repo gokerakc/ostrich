@@ -1,10 +1,12 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Ostrich.Core.Json;
 using Ostrich.Core.Models;
 using Ostrich.Core.Redis;
+using Ostrich.Core.Services;
 using StackExchange.Redis;
 
-namespace Ostrich.Core.Services;
+namespace Ostrich.Infrastructure.Services;
 
 public class RedisStreamConsumer : IStreamConsumer
 {
@@ -48,7 +50,7 @@ public class RedisStreamConsumer : IStreamConsumer
         var messages = new List<StreamMessage>(entries.Length);
         foreach (var entry in entries)
         {
-            var payment = JsonSerializer.Deserialize<Payment>((string)entry.Values.First().Value!);
+            var payment = JsonSerializer.Deserialize<Payment>((string)entry.Values.First().Value!, PaymentJson.Options);
             if (payment is not null)
             {
                 messages.Add(new StreamMessage(entry.Id.ToString(), payment));

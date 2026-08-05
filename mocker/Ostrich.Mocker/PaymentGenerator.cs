@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ostrich.Core.Json;
 using Ostrich.Core.Models;
 using Ostrich.Core.Redis;
 using StackExchange.Redis;
@@ -50,7 +51,7 @@ public class PaymentGenerator : BackgroundService
                 CreatedAt = DateTime.UtcNow
             };
 
-            var json = JsonSerializer.Serialize(payment);
+            var json = JsonSerializer.Serialize(payment, PaymentJson.Options);
             var messageId = await db.StreamAddAsync(
                 RedisStreams.PaymentStream,
                 "payment",

@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Ostrich.Core\Ostrich.Core.csproj"/>
+    </ItemGroup>
+
 </Project>

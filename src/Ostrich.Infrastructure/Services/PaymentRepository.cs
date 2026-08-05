@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Ostrich.Core.Data;
 using Ostrich.Core.Models;
+using Ostrich.Core.Services;
+using Ostrich.Infrastructure.Data;
 
-namespace Ostrich.Core.Services;
+namespace Ostrich.Infrastructure.Services;
 
 public class PaymentRepository : IPaymentRepository
 {
@@ -17,6 +18,13 @@ public class PaymentRepository : IPaymentRepository
     {
         await using var context = await _dbFactory.CreateDbContextAsync(ct);
         context.Payments.Add(payment);
+        await context.SaveChangesAsync(ct);
+    }
+
+    public async Task UpdateAsync(Payment payment, CancellationToken ct = default)
+    {
+        await using var context = await _dbFactory.CreateDbContextAsync(ct);
+        context.Payments.Update(payment);
         await context.SaveChangesAsync(ct);
     }
 
