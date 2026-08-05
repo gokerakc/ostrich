@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using Ostrich.Api.Endpoints;
 using Ostrich.Application.Services;
 using Ostrich.Core.Services;
@@ -14,6 +17,23 @@ builder.Services.AddDbContextFactory<AppDbContext>(options =>
 
 builder.Services.AddSingleton<IPaymentRepository, PaymentRepository>();
 builder.Services.AddSingleton<IPaymentService, PaymentService>();
+builder.Services.AddSingleton<PaymentMetrics>();
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService("Ostrich.Api"))
+    .WithMetrics(m => m
+        .AddAspNetCoreInstrumentation()
+        .AddRuntimeInstrumentation()
+        .AddMeter("Ostrich.Payments")
+        .AddOtlpExporter(o =>
+        {
+            o.Endpoint = new Uri("http://localhost:18889");
+        }))
+    .WithLogging(l => l
+        .AddOtlpExporter(o =>
+        {
+            o.Endpoint = new Uri("http://localhost:18889");
+        }));
 
 var app = builder.Build();
 

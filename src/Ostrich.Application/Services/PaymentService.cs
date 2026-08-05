@@ -29,10 +29,12 @@ public interface IPaymentService
 public class PaymentService : IPaymentService
 {
     private readonly IPaymentRepository _repository;
+    private readonly PaymentMetrics _metrics;
 
-    public PaymentService(IPaymentRepository repository)
+    public PaymentService(IPaymentRepository repository, PaymentMetrics metrics)
     {
         _repository = repository;
+        _metrics = metrics;
     }
 
     public async Task ProcessPaymentAsync(Payment payment, CancellationToken ct = default)
@@ -70,13 +72,15 @@ public class PaymentService : IPaymentService
                 payment.Status = "Refunded";
                 payment.RefundedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(payment, ct);
-                
+
+                _metrics.PaymentRefunded();
                 return new RefundResult(true, "");
             case "Pending":
                 payment.Status = "Cancelled";
                 payment.CancelledAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(payment, ct);
-                
+
+                _metrics.PaymentCancelled();
                 return new RefundResult(false, "PaymentCancelled");
             default:
                 throw new ArgumentException("Invalid payment status");

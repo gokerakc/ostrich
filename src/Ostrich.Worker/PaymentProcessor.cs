@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ostrich.Application.Services;
@@ -10,16 +11,19 @@ public class PaymentProcessor : BackgroundService
 {
     private readonly IStreamConsumer _streamConsumer;
     private readonly IPaymentService _paymentService;
+    private readonly PaymentMetrics _metrics;
     private readonly ILogger<PaymentProcessor> _logger;
     private readonly string _consumerName;
 
     public PaymentProcessor(
         IStreamConsumer streamConsumer,
         IPaymentService paymentService,
+        PaymentMetrics metrics,
         ILogger<PaymentProcessor> logger)
     {
         _streamConsumer = streamConsumer;
         _paymentService = paymentService;
+        _metrics = metrics;
         _logger = logger;
         _consumerName = $"worker-{Guid.NewGuid():N}";
     }
@@ -55,6 +59,7 @@ public class PaymentProcessor : BackgroundService
     private async Task ProcessMessageAsync(StreamMessage message, CancellationToken ct)
     {
         var payment = message.Payment;
+        var sw = Stopwatch.StartNew();
 
         _logger.LogInformation(
             "Processing payment {Id} | {Amount} {Currency} | {Merchant}",
@@ -62,6 +67,9 @@ public class PaymentProcessor : BackgroundService
 
         await _paymentService.ProcessPaymentAsync(payment, ct);
         await _streamConsumer.AcknowledgeAsync(message.EntryId);
+
+        sw.Stop();
+        _metrics.PaymentProcessed(sw.Elapsed.TotalMilliseconds);
 
         _logger.LogInformation("Payment {Id} processed and stored", payment.Id);
     }

@@ -8,5 +8,5 @@ Accept: application/json
 
 ###
 
-POST http://localhost:5098/payments/45c0f550-c659-4958-9340-bbe2798b7bec/refund
+POST http://localhost:5098/payments/9f6c9a59-8bb3-4fa4-973d-8f81638f9759/refund
 Accept: application/json

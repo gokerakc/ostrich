@@ -85,6 +85,7 @@ public class PaymentProcessorTests : IClassFixture<AppFixture>, IAsyncDisposable
             })
             .ConfigureServices(services =>
             {
+                services.AddSingleton<PaymentMetrics>();
                 services.AddSingleton<IConnectionMultiplexer>(_ => _redis);
                 services.AddDbContextFactory<AppDbContext>(options =>
                     options.UseNpgsql(_fixture.PostgresConnectionString));
