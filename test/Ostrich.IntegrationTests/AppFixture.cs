@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ostrich.Core.Models;
 using Ostrich.Infrastructure.Data;
 using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
@@ -55,6 +56,23 @@ public class AppFixture : IAsyncLifetime
         var dbFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
         await using var context = await dbFactory.CreateDbContextAsync();
         await context.Database.EnsureCreatedAsync();
+
+        if (!await context.Accounts.AnyAsync())
+        {
+            var accounts = new[]
+            {
+                new Account { Id = Guid.Parse("a1b2c3d4-0001-4000-8000-000000000001"), Name = "TechGadgets", Currency = "USD", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0002-4000-8000-000000000002"), Name = "FreshMart", Currency = "EUR", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0003-4000-8000-000000000003"), Name = "CloudHost", Currency = "USD", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0004-4000-8000-000000000004"), Name = "BookNest", Currency = "GBP", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0005-4000-8000-000000000005"), Name = "FitGear", Currency = "USD", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0006-4000-8000-000000000006"), Name = "BrewHouse", Currency = "EUR", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0007-4000-8000-000000000007"), Name = "GreenEnergy", Currency = "TRY", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+                new Account { Id = Guid.Parse("a1b2c3d4-0008-4000-8000-000000000008"), Name = "Streamly", Currency = "USD", Balance = 10000m, Version = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+            };
+            context.Accounts.AddRange(accounts);
+            await context.SaveChangesAsync();
+        }
     }
 
     public async Task DisposeAsync()

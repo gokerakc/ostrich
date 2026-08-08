@@ -12,6 +12,8 @@ namespace Ostrich.IntegrationTests;
 
 public class PaymentApiTests : IClassFixture<AppFixture>
 {
+    private static readonly Guid TestAccountId = Guid.Parse("a1b2c3d4-0001-4000-8000-000000000001");
+
     private readonly AppFixture _fixture;
     private readonly IDbContextFactory<AppDbContext> _dbFactory;
 
@@ -35,8 +37,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 100m, Currency = "USD",
-            Merchant = "TestMerchant", Status = "Processed",
-            ProcessedAt = DateTime.UtcNow
+            Merchant = "TestMerchant", AccountId = TestAccountId,
+            Status = "Processed", ProcessedAt = DateTime.UtcNow
         };
         await SeedAsync(payment);
 
@@ -56,8 +58,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 50m, Currency = "EUR",
-            Merchant = "GetMerchant", Status = "Processed",
-            ProcessedAt = DateTime.UtcNow
+            Merchant = "GetMerchant", AccountId = TestAccountId,
+            Status = "Processed", ProcessedAt = DateTime.UtcNow
         };
         await SeedAsync(payment);
 
@@ -88,8 +90,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 200m, Currency = "TRY",
-            Merchant = "RefundMerchant", Status = "Processed",
-            ProcessedAt = DateTime.UtcNow
+            Merchant = "RefundMerchant", AccountId = TestAccountId,
+            Status = "Processed", ProcessedAt = DateTime.UtcNow
         };
         await SeedAsync(payment);
 
@@ -110,8 +112,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 300m, Currency = "USD",
-            Merchant = "ConflictMerchant", Status = "Refunded",
-            RefundedAt = DateTime.UtcNow
+            Merchant = "ConflictMerchant", AccountId = TestAccountId,
+            Status = "Refunded", RefundedAt = DateTime.UtcNow
         };
         await SeedAsync(payment);
 
@@ -128,7 +130,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 400m, Currency = "GBP",
-            Merchant = "CancelMerchant", Status = "Pending"
+            Merchant = "CancelMerchant", AccountId = TestAccountId,
+            Status = "Pending"
         };
         await SeedAsync(payment);
 

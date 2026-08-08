@@ -18,6 +18,8 @@ namespace Ostrich.IntegrationTests;
 
 public class PaymentProcessorTests : IClassFixture<AppFixture>, IAsyncDisposable
 {
+    private static readonly Guid TestAccountId = Guid.Parse("a1b2c3d4-0001-4000-8000-000000000001");
+
     private readonly AppFixture _fixture;
     private readonly IDbContextFactory<AppDbContext> _dbFactory;
     private readonly IConnectionMultiplexer _redis;
@@ -36,7 +38,7 @@ public class PaymentProcessorTests : IClassFixture<AppFixture>, IAsyncDisposable
         {
             Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
             Amount = 500m, Currency = "USD",
-            Merchant = "WorkerMerchant"
+            Merchant = "WorkerMerchant", AccountId = TestAccountId
         };
 
         var host = BuildWorkerHost();
