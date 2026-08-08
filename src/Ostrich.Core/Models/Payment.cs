@@ -3,9 +3,11 @@ namespace Ostrich.Core.Models;
 public class Payment
 {
     public Guid Id { get; set; }
+    public Guid ExternalId { get; set; } // Idempotency key
     public decimal Amount { get; set; }
     public string Currency { get; set; } = string.Empty;
     public string Merchant { get; set; } = string.Empty;
+    public Guid AccountId { get; set; }
     public string Status { get; set; } = "Pending";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? ProcessedAt { get; set; }

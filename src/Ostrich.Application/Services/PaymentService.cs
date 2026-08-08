@@ -39,9 +39,7 @@ public class PaymentService : IPaymentService
 
     public async Task ProcessPaymentAsync(Payment payment, CancellationToken ct = default)
     {
-        payment.Status = "Processed";
-        payment.ProcessedAt = DateTime.UtcNow;
-        await _repository.SaveAsync(payment, ct);
+        await _repository.ProcessPaymentAsync(payment, ct);
     }
 
     public async Task<PagedResult<PaymentDto>> GetPaymentsAsync(int page, int pageSize, CancellationToken ct = default)
@@ -64,6 +62,7 @@ public class PaymentService : IPaymentService
         if(payment is null)
             return new RefundResult(false, "PaymentNotFound");
 
+        // TODO: Update ledger and account
         switch (payment.Status)
         {
             case "Refunded":

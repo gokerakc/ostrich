@@ -15,13 +15,17 @@ public class PaymentGenerator : BackgroundService
     private readonly ILogger<PaymentGenerator> _logger;
     private readonly GeneratorOptions _options;
 
-    private static readonly string[] Merchants =
+    private static readonly (Guid id, string name, string currency)[] Merchants =
     [
-        "TechGadgets", "FreshMart", "CloudHost", "BookNest",
-        "FitGear", "BrewHouse", "GreenEnergy", "Streamly"
+        (Guid.Parse("a1b2c3d4-0001-4000-8000-000000000001"), "TechGadgets", "USD"),
+        (Guid.Parse("a1b2c3d4-0002-4000-8000-000000000002"), "FreshMart", "EUR"),
+        (Guid.Parse("a1b2c3d4-0003-4000-8000-000000000003"), "CloudHost", "USD"),
+        (Guid.Parse("a1b2c3d4-0004-4000-8000-000000000004"), "BookNest", "GBP"),
+        (Guid.Parse("a1b2c3d4-0005-4000-8000-000000000005"), "FitGear", "USD"),
+        (Guid.Parse("a1b2c3d4-0006-4000-8000-000000000006"), "BrewHouse", "EUR"),
+        (Guid.Parse("a1b2c3d4-0007-4000-8000-000000000007"), "GreenEnergy", "TRY"),
+        (Guid.Parse("a1b2c3d4-0008-4000-8000-000000000008"), "Streamly", "USD")
     ];
-
-    private static readonly string[] Currencies = ["USD", "EUR", "GBP", "TRY"];
 
     public PaymentGenerator(
         IConnectionMultiplexer redis,
@@ -41,12 +45,16 @@ public class PaymentGenerator : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
+            var merchant = Merchants[Random.Shared.Next(Merchants.Length)];
+
             var payment = new Payment
             {
                 Id = Guid.NewGuid(),
+                ExternalId = Guid.NewGuid(),
                 Amount = Math.Round((decimal)(Random.Shared.NextDouble() * 1000 + 1), 2),
-                Currency = Currencies[Random.Shared.Next(Currencies.Length)],
-                Merchant = Merchants[Random.Shared.Next(Merchants.Length)],
+                Currency = merchant.currency,
+                Merchant = merchant.name,
+                AccountId = merchant.id,
                 Status = "Pending",
                 CreatedAt = DateTime.UtcNow
             };

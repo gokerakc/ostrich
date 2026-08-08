@@ -34,7 +34,8 @@ public class PaymentProcessorTests : IClassFixture<AppFixture>, IAsyncDisposable
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 500m, Currency = "USD",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 500m, Currency = "USD",
             Merchant = "WorkerMerchant"
         };
 

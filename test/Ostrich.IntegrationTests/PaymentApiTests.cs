@@ -33,7 +33,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 100m, Currency = "USD",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 100m, Currency = "USD",
             Merchant = "TestMerchant", Status = "Processed",
             ProcessedAt = DateTime.UtcNow
         };
@@ -53,7 +54,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 50m, Currency = "EUR",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 50m, Currency = "EUR",
             Merchant = "GetMerchant", Status = "Processed",
             ProcessedAt = DateTime.UtcNow
         };
@@ -84,7 +86,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 200m, Currency = "TRY",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 200m, Currency = "TRY",
             Merchant = "RefundMerchant", Status = "Processed",
             ProcessedAt = DateTime.UtcNow
         };
@@ -105,7 +108,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 300m, Currency = "USD",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 300m, Currency = "USD",
             Merchant = "ConflictMerchant", Status = "Refunded",
             RefundedAt = DateTime.UtcNow
         };
@@ -122,7 +126,8 @@ public class PaymentApiTests : IClassFixture<AppFixture>
     {
         var payment = new Payment
         {
-            Id = Guid.NewGuid(), Amount = 400m, Currency = "GBP",
+            Id = Guid.NewGuid(), ExternalId = Guid.NewGuid(),
+            Amount = 400m, Currency = "GBP",
             Merchant = "CancelMerchant", Status = "Pending"
         };
         await SeedAsync(payment);
